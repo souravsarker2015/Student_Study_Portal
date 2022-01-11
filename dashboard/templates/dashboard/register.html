@@ -1,0 +1,41 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% crispy form %}
+{% block content %}
+
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Today</legend>
+{#                {{ form.username|as_crispy_field }}#}
+{#                {{ form.password1|as_crispy_field }}#}
+{#                {{ form.password2|as_crispy_field }}#}
+                {% for fm in form %}
+                    {{ fm.label_tag }}{{ fm }} <small class="text-warning">{{ fm.errors | striptags }}</small><br><br>
+
+
+                {% endfor %}
+
+{#                {% crispy form %}#}
+            </fieldset>
+            <div class="form-group">
+                <button href="" class="btn btn-outline-info" type="submit">
+                    Sign Up
+                </button>
+            </div>
+
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <p class="alert alert-danger my-3">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">Already have an account?
+                <a class="ml-2" href="{% url 'login' %}">Sign In</a>
+            </small>
+        </div>
+    </div>
+{% endblock %}
